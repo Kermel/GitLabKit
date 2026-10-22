@@ -52,7 +52,9 @@ user's explicit instruction, one at a time.
    `source::external-bug-report`) are called out by origin.
 
 6. **Missing metadata**, one line per issue: no type label, no labels at all, open for more than 30
-   days with no workflow label, an active workflow label but no assignee.
+   days with no workflow label, an active workflow label but no assignee, **two labels of one kind**
+   (two configured workflow labels, or two configured type labels; Community Edition does not stop
+   it, conventions §3). Propose the fix as one PUT that keeps the right one and removes the other.
 
    **Missing links** (conventions §8). For an issue whose description names another `#n`, read its
    links (`projects/ID/issues/<iid>/links`). A named `#n` with no link is one line:

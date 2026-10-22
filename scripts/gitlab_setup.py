@@ -31,7 +31,9 @@ MARK_END = '<!-- gitlab-kit:end -->'
 PROJECT_PATH = re.compile(r'^[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)+$')
 ASCII_LABEL = re.compile(r'^[\x21-\x7e]([\x20-\x7e]*[\x21-\x7e])?$')
 
-TYPE_ROLES = ('bug', 'feature', 'task', 'idea', 'debt', 'other')
+# `phase`: the parent issue of a roadmap phase (Community Edition has no epics). A config that
+# still stores such a label as `other` keeps working; it is only not found by role.
+TYPE_ROLES = ('bug', 'feature', 'task', 'idea', 'debt', 'phase', 'other')
 STATUS_ROLES = ('todo', 'doing', 'review', 'blocked', 'other')
 
 DEFAULTS = {

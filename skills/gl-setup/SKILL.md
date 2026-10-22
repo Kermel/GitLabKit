@@ -141,13 +141,16 @@ scheme for what is missing. Show one table:
 | task | `type::task` | no | – |
 | idea | `type::idea` | no | – |
 | debt | `type::debt` | no | – |
+| phase | `type::phase` | no | – |
 | todo | `workflow::todo` | no | – |
 | doing | `workflow::doing` | no | – |
 | review | `workflow::review` | no | – |
 | (agent) | `gitlab-kit` | no | – |
 | (origin) | `source::agent-analysis`, `source::user-request`, `source::app-feedback`, `source::external-bug-report` | no | – |
 
-Type roles: `bug`, `feature`, `task`, `idea`, `debt`, `other`. Status roles: `todo`, `doing`,
+Type roles: `bug`, `feature`, `task`, `idea`, `debt`, `phase` (the parent issue of a roadmap
+phase; CE has no epics), `other`. A label stored as `other` by an older version and used for phase
+parents is proposed as `phase` on a rerun; keeping `other` still works. Status roles: `todo`, `doing`,
 `review`, `blocked`, `other`. At least `bug`, `task` and `doing` are needed. Keep the project's own
 labels where they exist; propose the defaults only for what is missing. Do not invent a taxonomy
 beyond this. Labels stay ASCII and are never translated.

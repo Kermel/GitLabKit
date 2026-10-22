@@ -1,7 +1,7 @@
 {
   "name": "gitlab-kit",
   "description": "Project-scoped GitLab issues for Claude Code: a deny-by-default PreToolUse guard that lets a workspace touch exactly one GitLab project through the official glab CLI, plus setup and issue-work skills. Works with or without agentic-kit.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "Ondřej Koller"
   },

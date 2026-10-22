@@ -40,7 +40,7 @@ Read `${CLAUDE_PLUGIN_ROOT}/docs/skill-conventions.md` first. Planning is read-o
 
    | Project uses | Shape |
    |---|---|
-   | parent issues (CE) | one parent issue (only for multi-issue work) whose description is an ordered task list of its children; each child relates to the parent |
+   | parent issues (CE) | one parent issue (only for multi-issue work; a roadmap phase's parent carries the `phase`-role label) whose description is an ordered task list of its children; each child relates to the parent |
    | milestones | the children share the milestone the person names |
    | neither | flat issues |
 
@@ -50,7 +50,8 @@ Read `${CLAUDE_PLUGIN_ROOT}/docs/skill-conventions.md` first. Planning is read-o
 
 6. **Ask, then create.** Any of these needs approval before the first write: more than one issue,
    any parent issue, any change to an existing issue's links or description, any relabelling of
-   existing issues. On approval, create each issue through the `/gl-create` steps (duplicate check,
+   existing issues (a relabel adds the new label and removes the old ones in one PUT,
+   conventions §3). On approval, create each issue through the `/gl-create` steps (duplicate check,
    agent label, origin label `agentAnalysis` or `userRequest`), one write at a time, one report
    line each. Create the parent first; after the children exist, update the parent's description
    with the ordered task list of their `#n` (one `PUT` with `--input`, reported).

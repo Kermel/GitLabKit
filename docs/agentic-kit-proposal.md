@@ -17,7 +17,7 @@ reference change:
 | a reference | `KEY-n` | `#n` |
 | where the spec names it | the `**Feature Branch**` line | a header line `Issue: #n` |
 | commits | carry `KEY-n` | carry the trailer `Refs #n`; never `Closes #n` or `Fixes #n` |
-| a phase | an epic `KEY-epic` | a parent issue `#n` (CE has no epics), or a milestone if the project uses them |
+| a phase | an epic `KEY-epic` | a parent issue `#n` with the `phase`-role label (CE has no epics), or a milestone if the project uses them |
 | an unscheduled idea | a Jira Idea | an issue with the idea-role label (`type::idea`) |
 | priority | Jira priority | the project's own convention; none by default |
 | the one-time sweep | `docs/jira-sweep.md` | the same document, read with this table |

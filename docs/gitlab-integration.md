@@ -165,7 +165,9 @@ Exit 2 and a message on stderr is a refusal. Exit 0 is an allow.
 - **The route allowlist is fixed in the guard.** A route a new skill needs is added there, with a
   must-allow and a must-block test.
 - **Community Edition** has no epics, no native status and only `relates_to` links. The kit uses
-  scoped labels, parent issues and a `Depends on #a.` line instead. `/gl-setup` detects the edition
+  scoped labels (a `phase` type role marks a roadmap phase's parent issue), parent issues and a
+  `Depends on #a.` line instead. On CE scoped labels are not exclusive: a status or type change
+  adds the new label and removes the old ones in one call. `/gl-setup` detects the edition
   from `GET metadata`; on an Enterprise instance it asks for the tier rather than guess.
 - **Token expiry.** Project access tokens expire. `/gl-status` warns 30 days ahead.
 

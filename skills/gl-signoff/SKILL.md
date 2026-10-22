@@ -39,16 +39,26 @@ close before doing it.
    > #11 *Login times out* appears ready to close. Criteria met: 3 of 3. Tests: 86 passing, guard
    > run by hand. Open risk: none recorded. Open merge request: none. Close it?
 
-   Options: yes; no; *yes with a closing note* if that is the project's habit. Wait.
+   Draft the closing note first and show it in the question. At most three lines, in
+   `ticketLanguage`:
 
-5. **On yes.** If the person asked for a closing note, add it first, in `ticketLanguage`, three
-   lines at most (`POST .../notes --input`). Then:
+   1. what was done, against the issue's acceptance criteria (its *Done when* or *Acceptance
+      criteria* section);
+   2. where the evidence is: the pipeline, the summary file, the merge request;
+   3. any debt left, with its `#n` if it has an issue; *No debt left.* when there is none.
+
+   Options, in this order: **yes, with this closing note** (the default, first); yes, without a
+   note; no. Wait.
+
+5. **On yes.** With the note (the default), add it first, exactly as shown and approved
+   (`POST .../notes --input`). Then:
 
    ```bash
    glab api -X PUT --hostname HOST projects/ID/issues/<iid> -f state_event=close
    ```
 
-   The closed state replaces the workflow label's meaning; leave the label as it is.
+   A plain *yes, without a note* closes with no note. The closed state replaces the workflow
+   label's meaning; leave the label as it is.
 
    If the person wants the **merge** to close the issue instead, this is the one place where
    `Closes #n` may be written into the merge-request description, and only the person edits or

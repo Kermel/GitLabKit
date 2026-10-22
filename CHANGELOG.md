@@ -3,6 +3,30 @@
 Every release raises `version` in `.claude-plugin/plugin.json`. `claude plugin update` compares
 that number only, so a change pushed under the old number is never installed.
 
+## 0.3.0 — scoped labels on Community Edition, a phase role, a closing note by default
+
+Three fixes found while using 0.2.0 on a real Community Edition 19.1 project.
+
+- **Scoped labels are not exclusive on Community Edition.** Measured: after
+  `add_labels=workflow::review` the issue carried both `workflow::doing` and `workflow::review`.
+  Only a paid tier makes a scoped label replace its sibling, and the conventions said otherwise.
+  Now every status or type change is **one PUT that adds the new label and removes every other
+  configured label of the same kind** (`add_labels=…` with `remove_labels=…`). Always, on every
+  edition, not only when `instance.enterprise` is false: removing a label an issue does not carry
+  changes nothing, so one path is right everywhere, and an edition check could be wrong (an
+  Enterprise build without a licence behaves like Community Edition). `/gl-work` does it;
+  `/gl-plan` relabels the same way; `/gl-triage` lists issues that carry two labels of one kind.
+- **`phase` type role**, for the parent issue of a roadmap phase (Community Edition has no epics).
+  `/gl-setup` offers `type::phase`; tools find phase parents by role. A config that stores such a
+  label as `other` keeps working and validates; a rerun proposes `phase`.
+- **`/gl-signoff` writes a closing note by default.** The first answer is *yes, with this closing
+  note*: at most three lines, drafted and shown before the question: what was done against the
+  issue's acceptance criteria (*Done when*), where the evidence is (pipeline, summary file, merge
+  request), any debt left. *Yes, without a note* stays possible.
+
+New `tests/test_skill_texts.py` tests the rules that live only in skill text; 8 of its 9 tests
+fail on the 0.2.0 files. 130 tests.
+
 ## 0.2.0 — opt-in CI reads
 
 **A workspace can read its own pipelines and lint its `.gitlab-ci.yml`, and only when it says so.**

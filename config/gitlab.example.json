@@ -23,7 +23,8 @@
     { "id": 102, "name": "type::feature", "role": "feature" },
     { "id": 103, "name": "type::task", "role": "task" },
     { "id": 104, "name": "type::idea", "role": "idea" },
-    { "id": 105, "name": "type::debt", "role": "debt" }
+    { "id": 105, "name": "type::debt", "role": "debt" },
+    { "id": 106, "name": "type::phase", "role": "phase" }
   ],
   "workflow": {
     "$comment": "Native states are opened and closed. Steps in between are scoped labels, matched by id. Closed is the only terminal state and always asks first.",

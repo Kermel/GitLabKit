@@ -147,6 +147,21 @@ class WriteConfig(Workspace):
         self.bind({'issueTypes': [{'id': 1, 'name': 'type::spike', 'role': 'spike'}]})
         self.assertEqual('other', self.config()['issueTypes'][0]['role'])
 
+    def test_phase_is_a_type_role(self):
+        phase = {'id': 30, 'name': 'type::phase', 'role': 'phase'}
+        self.bind(dict(LABELS, issueTypes=LABELS['issueTypes'] + [phase]))
+        self.assertEqual('phase', self.config()['issueTypes'][-1]['role'])
+        code, out, _ = run('validate', self.ws)
+        self.assertEqual(0, code, out)
+        self.assertIn('phase=type::phase', out)
+
+    def test_phase_label_stored_as_other_keeps_working(self):
+        old = {'id': 30, 'name': 'type::phase', 'role': 'other'}
+        self.bind(dict(LABELS, issueTypes=LABELS['issueTypes'] + [old]))
+        run('write-config', self.ws, self.answers({'ticketLanguage': 'English'}))   # a rerun
+        self.assertEqual('other', self.config()['issueTypes'][-1]['role'])
+        self.assertEqual(0, run('validate', self.ws)[0])
+
     def test_ci_read_is_off_by_default_and_kept_on_rerun(self):
         self.bind()
         self.assertIs(False, self.config()['ciRead'])

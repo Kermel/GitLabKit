@@ -20,7 +20,7 @@ the official `glab` CLI and a project access token.
 | Conventions every skill follows (one plain command, label ids, links, closing) | `docs/skill-conventions.md` | done |
 | Documentation | `docs/gitlab-integration.md`, `docs/integrating-with-a-workflow.md` | done |
 | Proposed changes to agentic-kit | `docs/agentic-kit-proposal.md` | proposal, not applied |
-| Tests | `tests/` | 117, all green |
+| Tests | `tests/` | 130, all green |
 
 **Next:** drive `/gl-work` and `/gl-signoff` on a real issue, and the CI reads against a live
 pipeline.

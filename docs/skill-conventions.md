@@ -44,8 +44,22 @@ renamed in the UI; its id stays. So:
   `glab api --hostname HOST projects/ID/labels/<id>`. Use the `name` that comes back.
 - **A stored name that no longer matches** its id is a rename, not a broken config. Use the
   current name, and say once that `/gl-setup` refreshes the stored names.
-- **A scoped label replaces its sibling.** `add_labels=workflow::review` removes
-  `workflow::doing` by itself. Never remove one by hand to add the other.
+- **Changing a status or a type is one PUT that adds the new label and removes the old ones.**
+  On Community Edition a scoped label does **not** replace its sibling: measured on a CE 19.1
+  project, `add_labels=workflow::review` left the issue with both `workflow::doing` and
+  `workflow::review`. Only a paid tier makes scoped labels exclusive. So always send both:
+
+  ```bash
+  glab api -X PUT --hostname HOST projects/ID/issues/12 -f 'add_labels=workflow::review' -f 'remove_labels=workflow::todo,workflow::doing'
+  ```
+
+  `remove_labels` lists the **current names** of every other configured label of the same kind
+  (the other `workflow.statuses` for a status, the other `issueTypes` for a type), whether or not
+  the issue carries them. Removing a label an issue does not carry changes nothing, so the same
+  call is right on every edition, and it needs no edition check that could be wrong (an Enterprise
+  build without a licence behaves like Community Edition). Never touch labels outside that kind.
+- **An issue that already carries two labels of one kind** (left by an older version or by hand)
+  is fixed the same way the next time its status or type changes; `/gl-triage` lists it.
 - Read issues by label with the labels' current names; compare an issue's `labels` with the
   current names of the configured ids.
 
@@ -116,6 +130,9 @@ A backlog must read in order, so an issue that depends on another is linked to i
 glab api --hostname HOST projects/ID/issues/<b>/links -f target_project_id=ID -f target_issue_iid=<a> -f link_type=relates_to
 ```
 
+- **A roadmap phase's parent carries the `phase`-role label** (`issueTypes[].role: "phase"`); find
+  phase parents by that role, never by a label name. A project without a `phase` role has no phase
+  parents to find; say so rather than guess.
 - **A parent is a regular issue** (`conventions.parentIssues`); CE has no epics. Its description
   holds the children as an ordered task list (`- [ ] #a`, `- [ ] #b`), and each child relates to it.
 

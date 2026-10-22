@@ -40,13 +40,17 @@ that is `/gl-signoff`.
 
 4. **Mark as started, only when asked.** If the user's instruction means "I am starting this" and
    the issue carries no active workflow label:
-   - read the current name of the first of `workflow.activeStatusIds`
-     (`projects/ID/labels/<id>`);
-   - `glab api -X PUT --hostname HOST projects/ID/issues/<iid> -f 'add_labels=<that name>'`;
-   - report the labels the response says the issue now carries.
+   - read the current names of every label in `workflow.statuses` by id
+     (`projects/ID/labels/<id>`, one call each);
+   - one PUT that adds the first of `workflow.activeStatusIds` and removes all the others
+     (conventions §3; Community Edition keeps both otherwise):
+     `glab api -X PUT --hostname HOST projects/ID/issues/<iid> -f 'add_labels=<doing name>' -f 'remove_labels=<every other status name, comma-separated>'`;
+   - report the labels the response says the issue now carries. More than one workflow label
+     left: say so, it means a name was stale.
 
-   A move between two active steps (doing to review) follows the same path when the user asks.
-   The scoped label replaces its sibling by itself. Closing is refused here: point to
+   A move between two steps (doing to review, or back to todo) follows the same path when the
+   user asks: add the target, remove every other status label. A change of type (bug to task) is
+   the same with `issueTypes`, and only when the user asks. Closing is refused here: point to
    `/gl-signoff`. An issue that is *closed* is not reopened without the user saying so
    (`-f state_event=reopen`, reported).
 

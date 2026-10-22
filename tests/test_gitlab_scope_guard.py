@@ -128,6 +128,19 @@ class AllowedWrites(GuardCase):
         self.allow('glab api -X PUT ' + H + " projects/42/issues/7 -f 'add_labels=workflow::doing'")
         self.allow('glab api -X PUT ' + H + ' projects/42/issues/7 -f state_event=close')
 
+    def test_status_change_adds_and_removes_in_one_put(self):
+        # Community Edition keeps both scoped labels unless the old one is removed (measured).
+        self.allow('glab api -X PUT ' + H + " projects/42/issues/7 -f 'add_labels=workflow::review' "
+                   "-f 'remove_labels=workflow::todo,workflow::doing'")
+        self.allow('glab api -X PUT ' + H + " projects/42/issues/7 -f 'add_labels=type::task' "
+                   "-f 'remove_labels=type::bug,type::feature,type::idea,type::debt,type::phase'")
+
+    def test_status_change_still_needs_put_and_this_project(self):
+        self.deny(API + "projects/42/issues/7 -f 'add_labels=workflow::review' "
+                        "-f 'remove_labels=workflow::doing'", 'POST')
+        self.deny('glab api -X PUT ' + H + " projects/43/issues/7 -f 'add_labels=workflow::review' "
+                  "-f 'remove_labels=workflow::doing'", '43')
+
     def test_note(self):
         self.allow(API + "projects/42/issues/7/notes -f 'body=Scope narrowed: the export is out.'")
 

@@ -1,0 +1,62 @@
+{
+  "$comment": "Lives at <workspace>/.claude/gitlab.json. Written by /gl-setup (scripts/gitlab_setup.py). Commit it. It holds no secrets: the token lives in GITLAB_TOKEN or Windows Credential Manager, this file only names the one project this workspace may touch. Label ids below are examples; /gl-setup fills the real ones.",
+  "enabled": true,
+  "host": "https://gitlab.example.com",
+  "projectId": 1234,
+  "projectPath": "group/app",
+  "projectName": "App",
+  "defaultBranch": "main",
+  "agentLabel": "gitlab-kit",
+  "enforceAgentLabelOnCreate": true,
+  "ciRead": false,
+  "ticketLanguage": "English",
+  "instance": {
+    "$comment": "Detected from GET metadata. Community Edition has no epics, no native status and only 'relates to' links.",
+    "version": "19.1.8",
+    "enterprise": false,
+    "epics": false,
+    "blockingLinks": false,
+    "nativeStatus": false
+  },
+  "issueTypes": [
+    { "id": 101, "name": "type::bug", "role": "bug" },
+    { "id": 102, "name": "type::feature", "role": "feature" },
+    { "id": 103, "name": "type::task", "role": "task" },
+    { "id": 104, "name": "type::idea", "role": "idea" },
+    { "id": 105, "name": "type::debt", "role": "debt" }
+  ],
+  "workflow": {
+    "$comment": "Native states are opened and closed. Steps in between are scoped labels, matched by id. Closed is the only terminal state and always asks first.",
+    "statuses": [
+      { "id": 111, "name": "workflow::todo", "role": "todo" },
+      { "id": 112, "name": "workflow::doing", "role": "doing" },
+      { "id": 113, "name": "workflow::review", "role": "review" }
+    ],
+    "initialStatusId": 111,
+    "activeStatusIds": [112, 113],
+    "initialStatus": "workflow::todo",
+    "activeStatuses": ["workflow::doing", "workflow::review"],
+    "requiresApprovalForClose": true,
+    "closeKeyword": "Relates to"
+  },
+  "conventions": {
+    "milestones": false,
+    "parentIssues": true
+  },
+  "triageTriggers": ["feature-start", "bugfix-start", "release-planning", "manual"],
+  "ticketCreationPolicy": {
+    "allowRoutineCreation": true,
+    "approvalRequiredForBulkOrAmbiguousCreation": true
+  },
+  "labels": {
+    "agentCreated": "gitlab-kit",
+    "agentAnalysis": "source::agent-analysis",
+    "userRequest": "source::user-request",
+    "appFeedback": "source::app-feedback",
+    "externalBugReport": "source::external-bug-report"
+  },
+  "guard": {
+    "mcpServers": [],
+    "auditLog": ".claude/gitlab-guard.log"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "gitlab-kit",
+  "description": "Project-scoped GitLab issues for Claude Code: a deny-by-default PreToolUse guard that lets a workspace touch exactly one GitLab project through the official glab CLI, plus setup and issue-work skills. Works with or without agentic-kit.",
+  "version": "0.2.0",
+  "author": {
+    "name": "Ondřej Koller"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^(Bash|PowerShell)$|^mcp__",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "HOOK_ROOT=$(printf %s \"${CLAUDE_PLUGIN_ROOT}\" | sed 's|^/\\([a-zA-Z]\\)/|\\1:/|'); python \"$HOOK_ROOT/hooks/gitlab-scope-guard.py\"",
+            "timeout": 10,
+            "statusMessage": "gitlab-kit: checking GitLab scope..."
+          }
+        ]
+      }
+    ]
+  }
+}

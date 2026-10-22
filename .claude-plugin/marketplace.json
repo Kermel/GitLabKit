@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "gitlab-kit",
+  "description": "Project-scoped GitLab issues for Claude Code. One workspace, one GitLab project, enforced by a hook.",
+  "owner": {
+    "name": "Ondřej Koller"
+  },
+  "plugins": [
+    {
+      "name": "gitlab-kit",
+      "description": "Deny-by-default GitLab scope guard, setup wizard and issue-work skills.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
